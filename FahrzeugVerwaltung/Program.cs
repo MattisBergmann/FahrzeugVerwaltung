@@ -10,6 +10,7 @@ namespace FahrzeugVerwaltung
     {
         private Program(VehicleConsoleService service)
         {
+            ColorConsole.EnableColor();
             Service = service;
             Console.WriteLine("Hallo und herzlich willkommen!");
             while (true)
@@ -23,7 +24,7 @@ namespace FahrzeugVerwaltung
                     // using ANSI Color Escape Codes for better readability
                     Console.Error.WriteLine("\u001b[31mEs ist ein Fehler bei der Eingabe aufgetreten:" + ex.Message);
                     Console.Error.WriteLine("Bitte erneut versuchen oder den Support kontaktieren\u001b[0m");
-                    Console.ReadLine();
+                    Console.ReadKey();
                 }
                 // Console.WriteLine("\u001b[2J");
             }
@@ -77,14 +78,14 @@ namespace FahrzeugVerwaltung
                     break;
                 // Remove a vehicle
                 case "2":
-                    Console.Write("Bitte geben Sie nun die Id ein\n>");
+                    Console.Write("Bitte geben Sie nun die Id ein\n\r>");
                     int id2 = Int32.Parse(Console.ReadLine());
                     Service.Delete(id2);
                     break;
                 // List all vehicles
                 case "3":
                     Service.GetAll();
-                    Console.ReadLine();
+                    Console.ReadKey();
                     break;
                 // Edit a vehicle
                 case "4":
@@ -98,13 +99,13 @@ namespace FahrzeugVerwaltung
                     }
                     break;
                 case "5":
-                    Console.Write("Bitte geben Sie den Dateipfad ein\n>");
+                    Console.Write("Bitte geben Sie den Dateipfad ein\n\r>");
                     string path5 = Console.ReadLine();
                     File.WriteAllText(path5, Service.ToJson());
                     WaitLine("\u001b[32mDatei wurde gespeicheret!\u001b[0m");
                     break;
                 case "6":
-                    Console.Write("Bitte geben Sie den Dateipfad ein\n>");
+                    Console.Write("Bitte geben Sie den Dateipfad ein\n\r>");
                     string path6 = Console.ReadLine();
                     Service = VehicleConsoleService.FromJSON(File.ReadAllText(path6));
                     WaitLine("\u001b[32mDatei wurde geladen!\u001b[0m");
@@ -137,7 +138,7 @@ namespace FahrzeugVerwaltung
         private static void WaitLine(string text)
         {
             Console.WriteLine(text);
-            Console.ReadLine();
+            Console.ReadKey();
         }
 
         private static Vehicle Create_Vehicle(bool needId)
@@ -150,19 +151,19 @@ namespace FahrzeugVerwaltung
             int id = 0;
             if (needId)
             {
-                Console.Write("Bitte geben Sie nun die Id ein\n>");
+                Console.Write("Bitte geben Sie nun die Id ein\n\r>");
                 id = Int32.Parse(Console.ReadLine());
             }
-            Console.Write("Bitte geben Sie nun die Marke ein\n>");
+            Console.Write("Bitte geben Sie nun die Marke ein\n\r>");
             string brand = Console.ReadLine();
-            Console.Write("Bitte geben Sie nun das Modell ein\n>");
+            Console.Write("Bitte geben Sie nun das Modell ein\n\r>");
             string model = Console.ReadLine();
             if (type == 1)
             {
                 return new PKW(id, brand, model);
             } else
             {
-                Console.Write("Bitte geben Sie die Frachtkapazität in kg ein\n>");
+                Console.Write("Bitte geben Sie die Frachtkapazität in kg ein\n\r>");
                 double capacity = Double.Parse(Console.ReadLine());
                 return new LKW(id, brand, model, capacity);
             }
