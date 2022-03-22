@@ -21,8 +21,7 @@ namespace FahrzeugVerwaltung
                 catch (Exception ex)
                 {
                     // using ANSI Color Escape Codes for better readability
-                    Console.Error.WriteLine("\u001b[31mEs ist ein Fehler bei der Eingabe aufgetreten:");
-                    Console.Error.WriteLine(ex);
+                    Console.Error.WriteLine("\u001b[31mEs ist ein Fehler bei der Eingabe aufgetreten:" + ex.Message);
                     Console.Error.WriteLine("Bitte erneut versuchen oder den Support kontaktieren\u001b[0m");
                     Console.ReadLine();
                 }
