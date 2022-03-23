@@ -2,42 +2,91 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 
 namespace FahrzeugVerwaltung.UI
 {
-    public class VehicleViewModel
+    public class VehicleViewModel : ViewModelBase
     {
         private Vehicle vehicle;
-        private ICommand saveCommand;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public VehicleViewModel()
         {
-            saveCommand = new RelayCommand(Save);
-            vehicle = new Vehicle();
+            SaveCommand = new RelayCommand(Save);
+            RandomCommand = new RelayCommand(Random);
+            Vehicle = new Vehicle();
+            Vehicles = new ObservableCollection<Vehicle>(VehicleList.RandomVehicles(5, 10));
         }
 
+        /// <summary>
+        /// Binding for the Save Button
+        /// </summary>
         private void Save()
         {
-            MessageBox.Show("");
+            MessageBox.Show($"Es wurde folgendes Fahrzeug angelegt: Typ: {Type}, Marke: {Brand}, Modell: {Model}");
+            Vehicles.Add(Vehicle);
+            Vehicle = new Vehicle();
         }
 
         /// <summary>
-        /// Gets or sets a type of a <see cref="Vehicle"/>.
+        /// Binding for the Random Button
         /// </summary>
-        public string Type { get => vehicle.Type; set => vehicle.Type = value; }
+        private void Random()
+        {
+            Vehicle = VehicleList.RandomVehicle();
+        }
 
         /// <summary>
-        /// Gets or sets a model of a <see cref="Vehicle"/>.
+        /// Gets or sets a <see cref="UI.Vehicle"/> and updates listeners.
         /// </summary>
-        public string Model { get => vehicle.Model; set => vehicle.Model = value; }
+        private Vehicle Vehicle
+        {
+            get
+            {
+                return vehicle;
+            }
+            set
+            {
+                vehicle = value;
+                RaisePropertyChanged(nameof(Type));
+                RaisePropertyChanged(nameof(Brand));
+                RaisePropertyChanged(nameof(Model));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a type of a <see cref="UI.Vehicle"/>.
+        /// </summary>
+        public string Type { get => Vehicle.Type; set => Vehicle.Type = value; }
+
+        /// <summary>
+        /// Gets or sets a model of a <see cref="UI.Vehicle"/>.
+        /// </summary>
+        public string Brand { get => Vehicle.Brand; set => Vehicle.Brand = value; }
+
+        /// <summary>
+        /// Gets or sets a model of a <see cref="UI.Vehicle"/>.
+        /// </summary>
+        public string Model { get => Vehicle.Model; set => Vehicle.Model = value; }
+
+        /// <summary>
+        /// The list of vehicles
+        /// </summary>
+        public ObservableCollection<Vehicle> Vehicles { get; set; }
 
         /// <summary>
         /// Gets or sets a save command
         /// </summary>
-        public ICommand SaveCommand { get => saveCommand; set => saveCommand = value; }
+        public ICommand SaveCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets a random command
+        /// </summary>
+        public ICommand RandomCommand { get; set; }
 
     }
 }

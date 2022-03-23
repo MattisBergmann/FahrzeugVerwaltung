@@ -29,6 +29,7 @@ namespace FahrzeugVerwaltung
                 // Console.WriteLine("\u001b[2J");
             }
         }
+
         static void Main(string[] args)
         {
             string path = "C:/dev/vehicles.json";

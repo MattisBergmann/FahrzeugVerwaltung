@@ -6,10 +6,31 @@ using System.Threading.Tasks;
 
 namespace FahrzeugVerwaltung.UI
 {
-    public class Vehicle
+    public class Vehicle : ICloneable
     {
+        public Vehicle()
+        {
+
+        }
+        public Vehicle(string type, string brand, string model)
+        {
+            Type = type;
+            Brand = brand;
+            Model = model;
+        }
+
+        public override string ToString()
+        {
+            return $"Type: {Type}, Brand: {Brand}, Model: {Model}";
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
         public string Type { get; set; }
-        public string Model { get; set; }
         public string Brand { get; set; }
+        public string Model { get; set; }
     }
 }

@@ -3,13 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FahrzeugVerwaltung.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="500">
+    <Window.Resources>
+        <ControlTemplate x:Key="ListBoxTemplate1" TargetType="{x:Type ListBox}"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -17,14 +20,36 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Label Content="Typ des Vehicles:" Grid.Row="0" Grid.Column="0"/>
-        <Label Content="Modell:" Grid.Row="1" Grid.Column="0"/>
-        <TextBox Grid.Row="0" Text="{Binding Type}" Grid.Column="1"/>
-        <TextBox Grid.Row="1" Text="{Binding Model}" Grid.Column="1"/>
-        
-        <Button Content="speichern" Command="{Binding SaveCommand}" Grid.Column="1" Grid.Row="3"/>
+        <Label Content="Marke:" Grid.Row="1"  Grid.Column="0"/>
+        <Label Content="Modell:" Grid.Row="2" Grid.Column="0"/>
 
+        <TextBox Text="{Binding Type}" Grid.Row="0" Grid.Column="1"/>
+        <TextBox Text="{Binding Brand}" Grid.Row="1" Grid.Column="1"/>
+        <TextBox Text="{Binding Model}" Grid.Row="2" Grid.Column="1"/>
+
+        <Button Content="Zufällig" Command="{Binding RandomCommand}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Button Content="Speichern" Command="{Binding SaveCommand}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+        <ListBox ItemsSource="{Binding Vehicles}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="{Binding Type}" FontWeight="Bold" />
+                        <Label Grid.Column="1" Content="{Binding Brand}" />
+                        <Label Grid.Column="2" Content="{Binding Model}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
