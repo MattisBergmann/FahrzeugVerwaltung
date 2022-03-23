@@ -14,4 +14,13 @@
     <ProjectReference Include="..\FahrzeugVerwaltung.Shared\FahrzeugVerwaltung.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Readme.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="vehicles.cars">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

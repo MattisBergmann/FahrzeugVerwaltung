@@ -1,8 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 
 namespace FahrzeugVerwaltung.UI
@@ -11,39 +14,21 @@ namespace FahrzeugVerwaltung.UI
     {
         private Vehicle vehicle;
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public VehicleViewModel()
+        public VehicleViewModel(Vehicle vehicle)
         {
-            SaveCommand = new RelayCommand(Save);
             RandomCommand = new RelayCommand(Random);
-            Vehicle = new Vehicle();
-            Vehicles = new ObservableCollection<Vehicle>(VehicleList.RandomVehicles(5, 10));
-        }
-
-        /// <summary>
-        /// Binding for the Save Button
-        /// </summary>
-        private void Save()
-        {
-            MessageBox.Show($"Es wurde folgendes Fahrzeug angelegt: Typ: {Type}, Marke: {Brand}, Modell: {Model}");
-            Vehicles.Add(Vehicle);
-            Vehicle = new Vehicle();
+            this.vehicle = (Vehicle)vehicle.Clone();
         }
 
         /// <summary>
         /// Binding for the Random Button
-        /// </summary>
+        /// </summary> 
         private void Random()
         {
             Vehicle = VehicleList.RandomVehicle();
         }
 
-        /// <summary>
-        /// Gets or sets a <see cref="UI.Vehicle"/> and updates listeners.
-        /// </summary>
-        private Vehicle Vehicle
+        public Vehicle Vehicle
         {
             get
             {
@@ -64,7 +49,7 @@ namespace FahrzeugVerwaltung.UI
         public string Type { get => Vehicle.Type; set => Vehicle.Type = value; }
 
         /// <summary>
-        /// Gets or sets a model of a <see cref="UI.Vehicle"/>.
+        /// Gets or sets a model of a <see cref="UI.vehicle"/>.
         /// </summary>
         public string Brand { get => Vehicle.Brand; set => Vehicle.Brand = value; }
 
@@ -72,11 +57,6 @@ namespace FahrzeugVerwaltung.UI
         /// Gets or sets a model of a <see cref="UI.Vehicle"/>.
         /// </summary>
         public string Model { get => Vehicle.Model; set => Vehicle.Model = value; }
-
-        /// <summary>
-        /// The list of vehicles
-        /// </summary>
-        public ObservableCollection<Vehicle> Vehicles { get; set; }
 
         /// <summary>
         /// Gets or sets a save command
@@ -87,6 +67,5 @@ namespace FahrzeugVerwaltung.UI
         /// Gets or sets a random command
         /// </summary>
         public ICommand RandomCommand { get; set; }
-
     }
 }

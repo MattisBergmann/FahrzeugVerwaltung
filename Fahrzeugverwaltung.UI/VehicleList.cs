@@ -9,7 +9,7 @@ namespace FahrzeugVerwaltung.UI
 {
     public class VehicleList
     {
-        public static readonly Vehicle[] models = LoadVehicles("C:/dev/vehicles.cars");
+        public static readonly Vehicle[] models = LoadVehicles("vehicles.cars");
 
         public static Vehicle[] LoadVehicles(string path)
         {

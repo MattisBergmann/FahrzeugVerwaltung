@@ -18,12 +18,36 @@ namespace FahrzeugVerwaltung.UI
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class VehicleWindow : Window
+    public partial class MainWindow : Window
     {
-        public VehicleWindow()
+        private MainViewModel viewModel = new MainViewModel();
+
+        public MainWindow()
         {
             InitializeComponent();
-            DataContext = new VehicleViewModel();
+            DataContext = viewModel;
+        }
+
+        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.Edit(vehiclesListBox.SelectedIndex);
+        }
+
+        private void MenuItemNew_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItemEdit_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.Edit(vehiclesListBox.SelectedIndex);
+        }
+
+        private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int index = vehiclesListBox.SelectedIndex;
+            viewModel.Delete(index);
+            vehiclesListBox.SelectedIndex = index;
         }
     }
 }
