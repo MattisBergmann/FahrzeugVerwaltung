@@ -4,37 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="500">
-    <Grid>
+        Title="Hauptenster" Height="350" Width="500">
+    <Grid Margin="4,4,4,4">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <ListBox Name="vehiclesListBox" ItemsSource="{Binding Vehicles}" MouseDoubleClick="ListBox_MouseDoubleClick" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" >
+        <Button Content="Zufällig" Command="{Binding RandomCommand}" Grid.Row="0"/>
+        <Button Content="Alle bearbeiten" Command="{Binding EditAllCommand}" Grid.Row="1"/>
+        <ListBox Name="vehiclesListBox" ItemsSource="{Binding Vehicles}" SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}" MouseDoubleClick="ListBox_MouseDoubleClick" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Neu" Click="MenuItemNew_Click"/>
-                    <MenuItem Header="Bearbeiten" Click="MenuItemEdit_Click"/>
-                    <MenuItem Header="Löschen" Click="MenuItemDelete_Click"/>
+                    <MenuItem Header="Bearbeiten" IsEnabled="{Binding Selected}" Click="MenuItemEdit_Click"/>
+                    <MenuItem Header="Löschen" IsEnabled="{Binding Selected}" Click="MenuItemDelete_Click"/>
+                    <MenuItem Header="Fahrzeuginformationen" IsEnabled="{Binding Selected}" Click="MenuItemInformation_Click"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="{Binding Type}" FontWeight="Bold" />
-                        <Label Grid.Column="1" Content="{Binding Brand}" />
-                        <Label Grid.Column="2" Content="{Binding Model}" />
+                        <CheckBox Grid.Column="0" IsChecked="{Binding Check}" IsEnabled="False" VerticalAlignment="Center"/>
+                        <Label Grid.Column="1" Content="{Binding Type}" FontWeight="Bold"/>
+                        <Label Grid.Column="2" Content="{Binding Brand}"/>
+                        <Label Grid.Column="3" Content="{Binding Model}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

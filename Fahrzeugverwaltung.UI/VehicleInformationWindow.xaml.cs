@@ -15,15 +15,15 @@ using System.Windows.Shapes;
 namespace FahrzeugVerwaltung.UI
 {
     /// <summary>
-    /// Interaction logic for VehicleWindow.xaml
+    /// Interaction logic for VehicleInformationWindow.xaml
     /// </summary>
-    public partial class VehicleWindow : Window
+    public partial class VehicleInformationWindow : Window, IClosable
     {
-        public readonly VehicleViewModel viewModel;
-        public VehicleWindow(Vehicle vehicle)
+        public VehicleInformationViewModel viewModel;
+        public VehicleInformationWindow(string text)
         {
             InitializeComponent();
-            viewModel = new VehicleViewModel(vehicle);
+            viewModel = new VehicleInformationViewModel(text, this);
             DataContext = viewModel;
         }
     }

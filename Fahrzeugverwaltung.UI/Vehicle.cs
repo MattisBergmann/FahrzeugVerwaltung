@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows;
+using GalaSoft.MvvmLight.Command;
 
 namespace FahrzeugVerwaltung.UI
 {
@@ -32,5 +35,6 @@ namespace FahrzeugVerwaltung.UI
         public string Type { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
+        public string Information { get; set; }
     }
 }

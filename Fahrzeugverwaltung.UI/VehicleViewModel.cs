@@ -1,11 +1,8 @@
-﻿using GalaSoft.MvvmLight.Command;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 
 namespace FahrzeugVerwaltung.UI
@@ -13,19 +10,12 @@ namespace FahrzeugVerwaltung.UI
     public class VehicleViewModel : ViewModelBase
     {
         private Vehicle vehicle;
+        private bool check;
 
         public VehicleViewModel(Vehicle vehicle)
         {
-            RandomCommand = new RelayCommand(Random);
-            this.vehicle = (Vehicle)vehicle.Clone();
-        }
-
-        /// <summary>
-        /// Binding for the Random Button
-        /// </summary> 
-        private void Random()
-        {
-            Vehicle = VehicleList.RandomVehicle();
+            this.Vehicle = vehicle;
+            Check = false;
         }
 
         public Vehicle Vehicle
@@ -43,29 +33,23 @@ namespace FahrzeugVerwaltung.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets a type of a <see cref="UI.Vehicle"/>.
-        /// </summary>
+        public bool Check
+        {
+            get
+            {
+                return check;
+            }
+            set
+            {
+                check = value;
+                RaisePropertyChanged(nameof(Check));
+            }
+        }
+
         public string Type { get => Vehicle.Type; set => Vehicle.Type = value; }
 
-        /// <summary>
-        /// Gets or sets a model of a <see cref="UI.vehicle"/>.
-        /// </summary>
         public string Brand { get => Vehicle.Brand; set => Vehicle.Brand = value; }
 
-        /// <summary>
-        /// Gets or sets a model of a <see cref="UI.Vehicle"/>.
-        /// </summary>
         public string Model { get => Vehicle.Model; set => Vehicle.Model = value; }
-
-        /// <summary>
-        /// Gets or sets a save command
-        /// </summary>
-        public ICommand SaveCommand { get; set; }
-
-        /// <summary>
-        /// Gets or sets a random command
-        /// </summary>
-        public ICommand RandomCommand { get; set; }
     }
 }

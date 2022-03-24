@@ -9,27 +9,32 @@ namespace FahrzeugVerwaltung.UI
 {
     public class MainViewModel : ViewModelBase
     {
-        private Vehicle vehicle;
-
+        private int selectedIndex = -1;
         /// <summary>
         /// Constructor
         /// </summary>
         public MainViewModel()
         {
-            SaveCommand = new RelayCommand(Save);
+            EditAllCommand = new RelayCommand(EditAll);
             RandomCommand = new RelayCommand(Random);
-            Vehicle = new Vehicle();
-            Vehicles = new ObservableCollection<Vehicle>(VehicleList.RandomVehicles(5, 10));
+            Vehicle[] vehicles = VehicleList.RandomVehicles(30, 50);
+            VehicleViewModel[] vehicleViewModels = new VehicleViewModel[vehicles.Length];
+            for (int i = 0; i < vehicles.Length; i++)
+            {
+                vehicleViewModels[i] = new VehicleViewModel(vehicles[i]);
+            }
+            Vehicles = new ObservableCollection<VehicleViewModel>(vehicleViewModels);
         }
 
         /// <summary>
-        /// Binding for the Save Button
+        /// Binding for the Edit All Button
         /// </summary>
-        private void Save()
+        private void EditAll()
         {
-            //MessageBox.Show($"Es wurde folgendes Fahrzeug angelegt: Typ: {Type}, Marke: {Brand}, Modell: {Model}");
-            Vehicles.Add(Vehicle);
-            Vehicle = new Vehicle();
+            for(int i = 0; i < Vehicles.Count; i++)
+            {
+                Edit(i);
+            }
         }
 
         /// <summary>
@@ -37,50 +42,82 @@ namespace FahrzeugVerwaltung.UI
         /// </summary>
         private void Random()
         {
-            Vehicle = VehicleList.RandomVehicle();
+            Vehicles.Add(new VehicleViewModel(VehicleList.RandomVehicle()));
         }
 
+        internal void EditInformation(int index)
+        {
+            var editWindow = new VehicleInformationWindow(Vehicles[index].Vehicle.Information);
+            editWindow.ShowDialog();
+            Vehicles[index].Vehicle.Information = editWindow.viewModel.Return;
+        }
+
+        internal void New()
+        {
+            var editWindow = new VehicleEditWindow(new Vehicle());
+            editWindow.ShowDialog();
+            Vehicles.Add(new VehicleViewModel(editWindow.viewModel.Return));
+        }
 
         /// <summary>
-        /// Binding for Editing a Vehicle
+        /// Edit a Vehicle
         /// </summary>
         /// <param name="index"></param>
         internal void Edit(int index)
         {
-            Vehicle = Vehicles[index];
-            var editWindow = new VehicleWindow(Vehicle);
+            if (index < 0) { return; }
+            var editWindow = new VehicleEditWindow(Vehicles[index].Vehicle);
             editWindow.ShowDialog();
-            Vehicles[index] = editWindow.viewModel.Vehicle;
+            Vehicles[index].Vehicle = editWindow.viewModel.Return;
         }
 
         /// <summary>
-        /// Binding for Editing a Vehicle
+        /// Delete a Vehicle
         /// </summary>
         /// <param name="index"></param>
         internal void Delete(int index)
         {
+            if (index < 0) { return; }
             Vehicles.RemoveAt(index);
         }
 
-        /// <summary>
-        /// Gets or sets a <see cref="UI.Vehicle"/> and updates listeners.
-        /// </summary>
-        private Vehicle Vehicle { get; set; }
+        public int SelectedIndex
+        {
+            set
+            {
+                if (selectedIndex >= 0 && selectedIndex < Vehicles.Count)
+                {
+                    Vehicles[selectedIndex].Check = false;
+                }
+                if (value >= 0 && value < Vehicles.Count)
+                {
+                    Vehicles[value].Check = true;
+                }
+                selectedIndex = value;
+                RaisePropertyChanged(nameof(Selected));
+            }
+
+            get
+            {
+                return selectedIndex;
+            }
+        }
+
+        public bool Selected { get => SelectedIndex >= 0 && SelectedIndex < Vehicles.Count; }
 
         /// <summary>
         /// The list of vehicles
         /// </summary>
-        public ObservableCollection<Vehicle> Vehicles { get; set; }
+        public ObservableCollection<VehicleViewModel> Vehicles { get; set; }
 
         /// <summary>
-        /// Gets or sets a save command
+        /// Gets or sets a edit all command
         /// </summary>
-        public ICommand SaveCommand { get; set; }
+        public ICommand EditAllCommand { get; set; }
 
         /// <summary>
         /// Gets or sets a random command
         /// </summary>
         public ICommand RandomCommand { get; set; }
-
     }
 }

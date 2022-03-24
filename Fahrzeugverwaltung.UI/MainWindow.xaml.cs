@@ -35,7 +35,7 @@ namespace FahrzeugVerwaltung.UI
 
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
         {
-
+            viewModel.New();
         }
 
         private void MenuItemEdit_Click(object sender, RoutedEventArgs e)
@@ -45,9 +45,14 @@ namespace FahrzeugVerwaltung.UI
 
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
-            int index = vehiclesListBox.SelectedIndex;
+            var index = vehiclesListBox.SelectedIndex;
             viewModel.Delete(index);
             vehiclesListBox.SelectedIndex = index;
+        }
+
+        private void MenuItemInformation_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.EditInformation(vehiclesListBox.SelectedIndex);
         }
     }
 }
