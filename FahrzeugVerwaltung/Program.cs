@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using FahrzeugVerwaltung.Shared;
-using FahrzeugVerwaltung.Service;
 
 namespace FahrzeugVerwaltung
 {

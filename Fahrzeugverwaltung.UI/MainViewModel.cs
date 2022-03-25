@@ -17,7 +17,7 @@ namespace FahrzeugVerwaltung.UI
         {
             EditAllCommand = new RelayCommand(EditAll);
             RandomCommand = new RelayCommand(Random);
-            Vehicle[] vehicles = VehicleList.RandomVehicles(30, 50);
+            Vehicle[] vehicles = VehicleList.RandomVehicles(3, 5);
             VehicleViewModel[] vehicleViewModels = new VehicleViewModel[vehicles.Length];
             for (int i = 0; i < vehicles.Length; i++)
             {

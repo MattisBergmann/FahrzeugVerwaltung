@@ -7,7 +7,7 @@ using FahrzeugVerwaltung.Shared;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FahrzeugVerwaltung.Service
+namespace FahrzeugVerwaltung
 {
     public class VehicleConsoleService
     {

@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FahrzeugVerwaltung.Service\FahrzeugVerwaltung.Service.csproj" />
     <ProjectReference Include="..\FahrzeugVerwaltung.Shared\FahrzeugVerwaltung.Shared.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Data;
+using System.Data.Common;
 
 namespace FahrzeugVerwaltung.LINQ
 {
@@ -7,8 +10,9 @@ namespace FahrzeugVerwaltung.LINQ
     {
         static void Main(string[] args)
         {
-            
-
+            var vehicles = VehicleList.models.Where(vehicle => vehicle.Brand != "Audi");
+            var query = vehicles.Where(vehicle => vehicle.Brand == "Audi").First();
+            Console.WriteLine(query);
         }
         static IEnumerable<string> Suits()
         {
