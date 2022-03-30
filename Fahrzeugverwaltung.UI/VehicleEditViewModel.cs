@@ -61,19 +61,24 @@ namespace FahrzeugVerwaltung.UI
         public Vehicle Return { get => saved ? Vehicle : oldVehicle; }
 
         /// <summary>
-        /// Gets or sets a type of a <see cref="UI.Vehicle"/>.
+        /// Gets or sets the type of a <see cref="UI.Vehicle"/>.
         /// </summary>
         public string Type { get => Vehicle.Type; set => Vehicle.Type = value; }
 
         /// <summary>
-        /// Gets or sets a model of a <see cref="UI.vehicle"/>.
+        /// Gets or sets the brand of a <see cref="UI.vehicle"/>.
         /// </summary>
         public string Brand { get => Vehicle.Brand; set => Vehicle.Brand = value; }
 
         /// <summary>
-        /// Gets or sets a model of a <see cref="UI.Vehicle"/>.
+        /// Gets or sets the model of a <see cref="UI.Vehicle"/>.
         /// </summary>
         public string Model { get => Vehicle.Model; set => Vehicle.Model = value; }
+
+        /// <summary>
+        /// Gets or sets the repair state of a <see cref="UI.Vehicle"/>
+        /// </summary>
+        public bool InRepair { get => Vehicle.InRepair; set => Vehicle.InRepair = value; }
 
         /// <summary>
         /// Gets or sets a save command

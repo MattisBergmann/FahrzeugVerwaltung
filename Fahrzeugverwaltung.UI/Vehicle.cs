@@ -35,6 +35,7 @@ namespace FahrzeugVerwaltung.UI
         public string Type { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
+        public bool InRepair { get; set; }
         public string Information { get; set; }
     }
 }

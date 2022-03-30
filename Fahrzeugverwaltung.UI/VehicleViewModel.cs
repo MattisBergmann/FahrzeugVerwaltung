@@ -30,6 +30,7 @@ namespace FahrzeugVerwaltung.UI
                 RaisePropertyChanged(nameof(Type));
                 RaisePropertyChanged(nameof(Brand));
                 RaisePropertyChanged(nameof(Model));
+                RaisePropertyChanged(nameof(InRepair));
             }
         }
 
@@ -47,9 +48,8 @@ namespace FahrzeugVerwaltung.UI
         }
 
         public string Type { get => Vehicle.Type; set => Vehicle.Type = value; }
-
         public string Brand { get => Vehicle.Brand; set => Vehicle.Brand = value; }
-
         public string Model { get => Vehicle.Model; set => Vehicle.Model = value; }
+        public bool InRepair { get => Vehicle.InRepair; set => Vehicle.InRepair = value; }
     }
 }

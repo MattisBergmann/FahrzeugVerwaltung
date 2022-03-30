@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Button Content="Zufällig" Command="{Binding RandomCommand}" Grid.Row="0"/>
         <Button Content="Alle bearbeiten" Command="{Binding EditAllCommand}" Grid.Row="1"/>
-        <ListBox Name="vehiclesListBox" ItemsSource="{Binding Vehicles}" SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}" MouseDoubleClick="ListBox_MouseDoubleClick" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ListBox Name="vehiclesListBox" ItemsSource="{Binding Vehicles}" SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}" MouseDoubleClick="ListBox_MouseDoubleClick" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Neu" Click="MenuItemNew_Click"/>
@@ -35,6 +35,18 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding InRepair}" Value="True">
+                                        <Setter Property="Background" Value="IndianRed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding InRepair}" Value="False">
+                                        <Setter Property="Background" Value="LightGreen"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <CheckBox Grid.Column="0" IsChecked="{Binding Check}" IsEnabled="False" VerticalAlignment="Center"/>
                         <Label Grid.Column="1" Content="{Binding Type}" FontWeight="Bold"/>
                         <Label Grid.Column="2" Content="{Binding Brand}"/>

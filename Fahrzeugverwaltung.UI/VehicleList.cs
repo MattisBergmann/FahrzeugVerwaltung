@@ -9,6 +9,7 @@ namespace FahrzeugVerwaltung.UI
 {
     public class VehicleList
     {
+        private static readonly Random random = new Random();
         public static readonly Vehicle[] models = LoadVehicles("vehicles.cars");
 
         public static Vehicle[] LoadVehicles(string path)
@@ -54,9 +55,9 @@ namespace FahrzeugVerwaltung.UI
 
         public static Vehicle RandomVehicle()
         {
-            return (Vehicle)models[random.Next(0, models.Length - 1)].Clone();
+            var vehicle = models[random.Next(0, models.Length - 1)].Clone() as Vehicle;
+            vehicle.InRepair = random.Next(2) == 0;
+            return vehicle;
         }
-
-        private static readonly Random random = new Random();
     }
 }

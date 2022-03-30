@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FahrzeugVerwaltung.UI"
         mc:Ignorable="d"
         Title="Fahrzeugfenster" Height="350" Width="500">
     <Grid Margin="4,4,4,4" >
@@ -17,17 +18,36 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <Label Content="Typ des Vehicles:" Grid.Row="0" Grid.Column="0"/>
         <Label Content="Marke:" Grid.Row="1"  Grid.Column="0"/>
         <Label Content="Modell:" Grid.Row="2" Grid.Column="0"/>
-        
-        <TextBox Text="{Binding Type}" Grid.Row="0" Grid.Column="1"/>
-        <TextBox Text="{Binding Brand}" Grid.Row="1" Grid.Column="1"/>
-        <TextBox Text="{Binding Model}" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="In Reperatur:" Grid.Row="3" Grid.Column="0"/>
 
-        <Button Content="Zufällig" Command="{Binding RandomCommand}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <Button Content="Speichern" Command="{Binding SaveCommand}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <TextBox Text="{Binding Type}" Grid.Row="0" Grid.Column="1"/>
+        <TextBox Grid.Row="1" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="Brand">
+                    <Binding.ValidationRules>
+                        <local:VehicleValidationRule MinLength="4" OnlyText="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="Model">
+                    <Binding.ValidationRules>
+                        <local:VehicleValidationRule MinLength="4" OnlyText="False"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <CheckBox IsChecked="{Binding InRepair}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"/>
+
+        <Button Content="Zufällig" Command="{Binding RandomCommand}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Button Content="Speichern" Command="{Binding SaveCommand}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

@@ -9,10 +9,10 @@ namespace FahrzeugVerwaltung.Service
     {
         private readonly List<Vehicle> vehicles;
 
-        public VehicleRepository(string path)
+        public VehicleRepository()
         {
-            Path = path;
-            var json = File.ReadAllText(path);
+            Path = "vehicles.json";
+            var json = File.ReadAllText(Path);
             vehicles = JsonSerializer.Deserialize<List<Vehicle>>(json, new JsonSerializerOptions { Converters = { new VehicleJsonConverter() } });
         }
 
