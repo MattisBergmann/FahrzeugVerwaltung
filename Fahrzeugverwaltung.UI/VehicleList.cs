@@ -12,6 +12,11 @@ namespace FahrzeugVerwaltung.UI
         private static readonly Random random = new Random();
         public static readonly Vehicle[] models = LoadVehicles("vehicles.cars");
 
+        /// <summary>
+        /// Loads a list of <see cref="Vehicle"/> from <paramref name="path"/> and returns it
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static Vehicle[] LoadVehicles(string path)
         {
             string[] lines;
@@ -42,7 +47,13 @@ namespace FahrzeugVerwaltung.UI
             return vehicles;
         }
 
-        public static Vehicle[] RandomVehicles(int min, int max)
+        /// <summary>
+        /// Returns a random list of <see cref="Vehicle"/> from <paramref name="list"/>
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static Vehicle[] RandomVehicles(Vehicle[] list, int min, int max)
         {
             var num = random.Next(min, max);
             Vehicle[] vehicles = new Vehicle[num];
@@ -53,11 +64,21 @@ namespace FahrzeugVerwaltung.UI
             return vehicles;
         }
 
-        public static Vehicle RandomVehicle()
+        public static Vehicle[] RandomVehicles(int min, int max)
+        {
+            return RandomVehicles(models, min, max);
+        }
+
+        public static Vehicle RandomVehicle(Vehicle[] list)
         {
             var vehicle = models[random.Next(0, models.Length - 1)].Clone() as Vehicle;
             vehicle.InRepair = random.Next(2) == 0;
             return vehicle;
+        }
+
+        public static Vehicle RandomVehicle()
+        {
+            return RandomVehicle(models);
         }
     }
 }

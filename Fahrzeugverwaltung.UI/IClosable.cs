@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FahrzeugVerwaltung.UI
 {
+    /// <summary>
+    /// Interface for Closable windows
+    /// </summary>
     public interface IClosable
     {
         public void Close();

@@ -43,6 +43,10 @@ namespace FahrzeugVerwaltung.UI
             Vehicle = VehicleList.RandomVehicle();
         }
 
+        /// <summary>
+        /// Gets or sets a <see cref="UI.Vehicle"/>
+        /// <br>triggers event PropertyChanged when modified</br>
+        /// </summary>
         private Vehicle Vehicle
         {
             get
@@ -55,9 +59,13 @@ namespace FahrzeugVerwaltung.UI
                 RaisePropertyChanged(nameof(Type));
                 RaisePropertyChanged(nameof(Brand));
                 RaisePropertyChanged(nameof(Model));
+                RaisePropertyChanged(nameof(InRepair));
             }
         }
 
+        /// <summary>
+        /// Returns the edited <see cref="UI.Vehicle"/> if it was saved
+        /// </summary>
         public Vehicle Return { get => saved ? Vehicle : oldVehicle; }
 
         /// <summary>

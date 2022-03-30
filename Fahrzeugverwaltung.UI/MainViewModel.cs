@@ -45,6 +45,10 @@ namespace FahrzeugVerwaltung.UI
             Vehicles.Add(new VehicleViewModel(VehicleList.RandomVehicle()));
         }
 
+        /// <summary>
+        /// Opens a <see cref="VehicleInformationWindow"/>
+        /// </summary>
+        /// <param name="index"></param>
         internal void EditInformation(int index)
         {
             var editWindow = new VehicleInformationWindow(Vehicles[index].Vehicle.Information);
@@ -52,6 +56,9 @@ namespace FahrzeugVerwaltung.UI
             Vehicles[index].Vehicle.Information = editWindow.viewModel.Return;
         }
 
+        /// <summary>
+        /// Opens a <see cref="VehicleEditWindow"/> and adds as new Vehicle
+        /// </summary>
         internal void New()
         {
             var editWindow = new VehicleEditWindow(new Vehicle());
@@ -60,7 +67,7 @@ namespace FahrzeugVerwaltung.UI
         }
 
         /// <summary>
-        /// Edit a Vehicle
+        /// Opens a <see cref="VehicleEditWindow"/> to edit a Vehicle
         /// </summary>
         /// <param name="index"></param>
         internal void Edit(int index)
@@ -81,6 +88,10 @@ namespace FahrzeugVerwaltung.UI
             Vehicles.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Gets or sets the selected Index of the ListBox
+        /// <br>triggers event PropertyChanged when modified</br>
+        /// </summary>
         public int SelectedIndex
         {
             set
@@ -103,6 +114,9 @@ namespace FahrzeugVerwaltung.UI
             }
         }
 
+        /// <summary>
+        /// true if an item in the ListBox is selected
+        /// </summary>
         public bool Selected { get => SelectedIndex >= 0 && SelectedIndex < Vehicles.Count; }
 
         /// <summary>

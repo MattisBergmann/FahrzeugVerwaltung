@@ -16,6 +16,11 @@ namespace FahrzeugVerwaltung.UI
         private readonly string oldText;
         private IClosable window;
 
+        /// <summary>
+        /// Constructor for the ViewModel
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="window"></param>
         public VehicleInformationViewModel(string text, IClosable window)
         {
             if (text == null)
@@ -40,10 +45,19 @@ namespace FahrzeugVerwaltung.UI
             window.Close();
         }
 
+        /// <summary>
+        /// returns the edited Text if it was saved
+        /// </summary>
         public string Return { get => saved ? Text : oldText; }
 
+        /// <summary>
+        /// Binding for the TextBox
+        /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// Binding for the Save button
+        /// </summary>
         public ICommand SaveCommand { get; set; }
     }
 }
