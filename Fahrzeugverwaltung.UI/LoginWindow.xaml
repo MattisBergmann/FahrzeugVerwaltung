@@ -1,0 +1,18 @@
+﻿<Window x:Class="FahrzeugVerwaltung.UI.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FahrzeugVerwaltung.UI"
+        mc:Ignorable="d"
+        Title="Login" Height="280" Width="400" ResizeMode="CanMinimize">
+    <StackPanel Margin="4">
+        <Label Content="FahrzeugVerwaltung - Login" FontSize="24" HorizontalContentAlignment="Center"/>
+        <Label Content="Benutzername:" FontSize="12"/>
+        <TextBox Text="{Binding Username}" VerticalContentAlignment="Center" Margin="8,0,8,8" FontSize="16"/>
+        <Label Content="Passwort:" FontSize="12"/>
+        <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" VerticalContentAlignment="Center" Margin="8,0,8,8" FontSize="16"/>
+        <CheckBox Content="Angemeldet bleiben" IsChecked="{Binding Keep}" Margin="8,8,8,8"/>
+        <Button Content="Anmelden" Command="{Binding LoginCommand}" Margin="8,8,8,0"/>
+    </StackPanel>
+</Window>
