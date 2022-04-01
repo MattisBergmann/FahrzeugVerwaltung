@@ -17,7 +17,7 @@ namespace FahrzeugVerwaltung.UI
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window, IResultable
+    public partial class LoginWindow : Window, IDialogResultable
     {
         private LoginViewModel viewModel;
 
@@ -28,6 +28,11 @@ namespace FahrzeugVerwaltung.UI
             DataContext = viewModel;
         }
 
+        /// <summary>
+        /// Invoked when the password was changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             viewModel.Password = ((PasswordBox)sender).Password;

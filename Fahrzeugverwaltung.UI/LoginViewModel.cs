@@ -7,16 +7,19 @@ namespace FahrzeugVerwaltung.UI
 {
     public class LoginViewModel
     {
-        private readonly IResultable window;
+        private readonly IDialogResultable window;
         private readonly User user;
 
-        public LoginViewModel(User user, IResultable window)
+        public LoginViewModel(User user, IDialogResultable window)
         {
             this.window = window;
             this.user = user;
             LoginCommand = new RelayCommand(Login);
         }
 
+        /// <summary>
+        /// Perform Login when Login Button is clicked
+        /// </summary>
         private void Login()
         {
             if (Username != null && Password != null)
@@ -40,6 +43,10 @@ namespace FahrzeugVerwaltung.UI
             window.Close();
         }
 
+        /// <summary>
+        /// Create a new User
+        /// </summary>
+        /// <param name="user"></param>
         private void Create(User user)
         {
             user.Name = Username;
@@ -49,6 +56,11 @@ namespace FahrzeugVerwaltung.UI
             user.Created = true;
         }
 
+        /// <summary>
+        /// Verifies users credentials and rehashes the users password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         private bool VerifyAndReHash(User user)
         {
             if (!user.Created)
@@ -69,6 +81,12 @@ namespace FahrzeugVerwaltung.UI
             return true;
         }
 
+        /// <summary>
+        /// Gives a PBKDF2 hashed password
+        /// </summary>
+        /// <param name="salt"></param>
+        /// <param name="hashlen"></param>
+        /// <returns></returns>
         private byte[] GetHash(byte[] salt, int hashlen)
         {
             var pbkdf2 = new Rfc2898DeriveBytes(Password, salt, 100000);

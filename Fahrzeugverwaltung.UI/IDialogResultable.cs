@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace FahrzeugVerwaltung.UI
 {
-    public interface IResultable : IClosable
+    /// <summary>
+    /// Interface for Classes that have a dialog result
+    /// </summary>
+    public interface IDialogResultable : IClosable
     {
-        // public void Result(bool? accepted);
         public bool? DialogResult { get; set; }
     }
 }
