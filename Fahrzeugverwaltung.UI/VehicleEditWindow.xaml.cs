@@ -20,10 +20,26 @@ namespace FahrzeugVerwaltung.UI
     public partial class VehicleEditWindow : Window, IClosable
     {
         public readonly VehicleEditViewModel viewModel;
+
+        /// <summary>
+        /// Constructor that takes a <see cref="Vehicle"/>
+        /// </summary>
+        /// <param name="vehicle"></param>
         public VehicleEditWindow(Vehicle vehicle)
         {
             InitializeComponent();
             viewModel = new VehicleEditViewModel(vehicle, this);
+            DataContext = viewModel;
+        }
+
+        /// <summary>
+        /// Constructor that takes an array of <see cref="Vehicle"/>
+        /// </summary>
+        /// <param name="vehicles"></param>
+        public VehicleEditWindow(Vehicle[] vehicles)
+        {
+            InitializeComponent();
+            viewModel = new VehicleEditViewModel(vehicles, this);
             DataContext = viewModel;
         }
     }

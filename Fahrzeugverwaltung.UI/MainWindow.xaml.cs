@@ -28,21 +28,41 @@ namespace FahrzeugVerwaltung.UI
             DataContext = viewModel;
         }
 
+        /// <summary>
+        /// Invoked when an item in the ListBox is double clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             viewModel.Edit(vehiclesListBox.SelectedIndex);
         }
 
+        /// <summary>
+        /// Invoked when the New item in the Context Menu is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
         {
             viewModel.New();
         }
 
+        /// <summary>
+        /// Invoked when the Edit item in the Context Menu is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemEdit_Click(object sender, RoutedEventArgs e)
         {
             viewModel.Edit(vehiclesListBox.SelectedIndex);
         }
 
+        /// <summary>
+        /// Invoked when the Delete item in the Context Menu is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
             var index = vehiclesListBox.SelectedIndex;
@@ -50,6 +70,11 @@ namespace FahrzeugVerwaltung.UI
             vehiclesListBox.SelectedIndex = index;
         }
 
+        /// <summary>
+        /// Invoked when the Information item in the Context Menu is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemInformation_Click(object sender, RoutedEventArgs e)
         {
             viewModel.EditInformation(vehiclesListBox.SelectedIndex);

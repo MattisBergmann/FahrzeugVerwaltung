@@ -1,13 +1,14 @@
-﻿using GalaSoft.MvvmLight.Command;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
 using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
+using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace FahrzeugVerwaltung.UI
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ObservableRecipient
     {
         private int selectedIndex = -1;
         /// <summary>
@@ -31,9 +32,13 @@ namespace FahrzeugVerwaltung.UI
         /// </summary>
         private void EditAll()
         {
-            for(int i = 0; i < Vehicles.Count; i++)
+            var editWindow = new VehicleEditWindow(Vehicles.Select(viewModel => viewModel.Vehicle.Clone() as Vehicle).ToArray());
+            editWindow.ShowDialog();
+            var vehicles = editWindow.viewModel.ReturnVehicles;
+            if(vehicles != null)
             {
-                Edit(i);
+                Vehicles = new ObservableCollection<VehicleViewModel>(vehicles.Select(vehicle => new VehicleViewModel(vehicle)));
+                OnPropertyChanged(nameof(Vehicles));
             }
         }
 
@@ -63,7 +68,11 @@ namespace FahrzeugVerwaltung.UI
         {
             var editWindow = new VehicleEditWindow(new Vehicle());
             editWindow.ShowDialog();
-            Vehicles.Add(new VehicleViewModel(editWindow.viewModel.Return));
+            var vehicle = editWindow.viewModel.ReturnVehicle;
+            if(vehicle != null)
+            {
+                Vehicles.Add(new VehicleViewModel(vehicle));
+            }
         }
 
         /// <summary>
@@ -72,10 +81,14 @@ namespace FahrzeugVerwaltung.UI
         /// <param name="index"></param>
         internal void Edit(int index)
         {
-            if (index < 0) { return; }
-            var editWindow = new VehicleEditWindow(Vehicles[index].Vehicle);
+            if (!Selected) { return; }
+            var editWindow = new VehicleEditWindow(Vehicles[index].Vehicle.Clone() as Vehicle);
             editWindow.ShowDialog();
-            Vehicles[index].Vehicle = editWindow.viewModel.Return;
+            var vehicle = editWindow.viewModel.ReturnVehicle;
+            if (vehicle != null)
+            {
+                Vehicles[index].Vehicle = vehicle;
+            }
         }
 
         /// <summary>
@@ -105,7 +118,7 @@ namespace FahrzeugVerwaltung.UI
                     Vehicles[value].Check = true;
                 }
                 selectedIndex = value;
-                RaisePropertyChanged(nameof(Selected));
+                OnPropertyChanged(nameof(Selected));
             }
 
             get

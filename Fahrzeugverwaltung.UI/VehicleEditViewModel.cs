@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,28 +7,73 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
 
 namespace FahrzeugVerwaltung.UI
 {
-    public class VehicleEditViewModel : ViewModelBase
+    public class VehicleEditViewModel : ObservableRecipient
     {
         private bool saved = false;
-        private readonly Vehicle oldVehicle;
+        private readonly Vehicle[] vehicles;
+        private int index = 0;
         private Vehicle vehicle;
         private IClosable window;
 
-        public VehicleEditViewModel(Vehicle vehicle, IClosable window)
+        private VehicleEditViewModel(IClosable window)
         {
-            Vehicle = (Vehicle)vehicle.Clone();
-            oldVehicle = vehicle;
             this.window = window;
             RandomCommand = new RelayCommand(Random);
             SaveCommand = new RelayCommand(Save);
+            PreviousCommand = new RelayCommand(Previous);
+            NextCommand = new RelayCommand(Next);
         }
 
         /// <summary>
-        /// Binding for the Random Button
+        /// Constructor that takes an array of <see cref="UI.Vehicle"/>
+        /// </summary>
+        /// <param name="vehicles"></param>
+        /// <param name="window"></param>
+        public VehicleEditViewModel(Vehicle[] vehicles, IClosable window) : this(window)
+        {
+            this.vehicles = vehicles;
+            vehicle = vehicles[0];
+        }
+
+        /// <summary>
+        /// Constructor that takes only one <see cref="UI.Vehicle"/>
+        /// </summary>
+        /// <param name="vehicle"></param>
+        /// <param name="window"></param>
+        public VehicleEditViewModel(Vehicle vehicle, IClosable window) : this(window)
+        {
+            Vehicle = vehicle;
+        }
+
+        /// <summary>
+        /// Binding for the Left Arrow
+        /// </summary>
+        private void Previous()
+        {
+            if (HasPrevious)
+            {
+                Index--;
+                Vehicle = vehicles[Index];
+            }
+        }
+
+        /// <summary>
+        /// Binding for the Right Arrow
+        /// </summary>
+        private void Next()
+        {
+            if (HasNext)
+            {
+                Index++;
+                Vehicle = vehicles[Index];
+            }
+        }
+
+        /// <summary>
+        /// Binding for the Save Button
         /// </summary>
         private void Save()
         {
@@ -41,6 +87,7 @@ namespace FahrzeugVerwaltung.UI
         private void Random()
         {
             Vehicle = VehicleList.RandomVehicle();
+            vehicles[Index] = Vehicle;
         }
 
         /// <summary>
@@ -56,17 +103,60 @@ namespace FahrzeugVerwaltung.UI
             set
             {
                 vehicle = value;
-                RaisePropertyChanged(nameof(Type));
-                RaisePropertyChanged(nameof(Brand));
-                RaisePropertyChanged(nameof(Model));
-                RaisePropertyChanged(nameof(InRepair));
+                OnPropertyChanged(nameof(Type));
+                OnPropertyChanged(nameof(Brand));
+                OnPropertyChanged(nameof(Model));
+                OnPropertyChanged(nameof(InRepair));
+            }
+        }
+
+
+        /// <summary>
+        /// Zero based index of current selected Dataset
+        /// </summary>
+        public int Index
+        {
+            get
+            {
+                return index;
+            }
+            set
+            {
+                if(value >= 0 && value < Count)
+                {
+                    index = value;
+                    OnPropertyChanged(nameof(DatasetNumber));
+                    OnPropertyChanged(nameof(HasPrevious));
+                    OnPropertyChanged(nameof(HasNext));
+                }
             }
         }
 
         /// <summary>
+        /// One based index of current selected Dataset (for Binding)
+        /// </summary>
+        public int DatasetNumber
+        {
+            get
+            {
+                return Index + 1;
+            }
+        }
+
+        /// <summary>
+        /// Number of items in <see cref="vehicles"/>
+        /// </summary>
+        public int Count { get { return vehicles?.Length ?? 1; } }
+
+        /// <summary>
         /// Returns the edited <see cref="UI.Vehicle"/> if it was saved
         /// </summary>
-        public Vehicle Return { get => saved ? Vehicle : oldVehicle; }
+        public Vehicle ReturnVehicle { get => saved ? vehicle : null; }
+
+        /// <summary>
+        /// Returns the edited list of <see cref="UI.Vehicle"/> if it was saved
+        /// </summary>
+        public Vehicle[] ReturnVehicles { get => saved ? vehicles : null; }
 
         /// <summary>
         /// Gets or sets the type of a <see cref="UI.Vehicle"/>.
@@ -97,6 +187,26 @@ namespace FahrzeugVerwaltung.UI
         /// Gets or sets a random command
         /// </summary>
         public ICommand RandomCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets a previous command
+        /// </summary>
+        public ICommand PreviousCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets a next command
+        /// </summary>
+        public ICommand NextCommand { get; set; }
+
+        /// <summary>
+        /// Indicates wether there are items in the list behind the selected
+        /// </summary>
+        public bool HasNext { get => vehicles?.Length - 1 > Index; }
+
+        /// <summary>
+        /// Indicates wether there are items in the list before the selected
+        /// </summary>
+        public bool HasPrevious { get => Index > 0; }
 
     }
 }

@@ -1,7 +1,7 @@
-﻿using GalaSoft.MvvmLight.Command;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Windows.Input;
 using System.Linq;
+using Microsoft.Toolkit.Mvvm.Input;
 
 namespace FahrzeugVerwaltung.UI
 {

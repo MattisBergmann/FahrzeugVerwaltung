@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace FahrzeugVerwaltung.UI
 {
     /// <summary>
     /// ViewModel for a <see cref="UI.Vehicle"/>
     /// </summary>
-    public class VehicleViewModel : ViewModelBase
+    public class VehicleViewModel : ObservableRecipient
     {
         private Vehicle vehicle;
         private bool check;
@@ -38,10 +38,10 @@ namespace FahrzeugVerwaltung.UI
             set
             {
                 vehicle = value;
-                RaisePropertyChanged(nameof(Type));
-                RaisePropertyChanged(nameof(Brand));
-                RaisePropertyChanged(nameof(Model));
-                RaisePropertyChanged(nameof(InRepair));
+                OnPropertyChanged(nameof(Type));
+                OnPropertyChanged(nameof(Brand));
+                OnPropertyChanged(nameof(Model));
+                OnPropertyChanged(nameof(InRepair));
             }
         }
 
@@ -58,7 +58,7 @@ namespace FahrzeugVerwaltung.UI
             set
             {
                 check = value;
-                RaisePropertyChanged(nameof(Check));
+                OnPropertyChanged(nameof(Check));
             }
         }
 

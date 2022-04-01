@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FahrzeugVerwaltung.UI"
         mc:Ignorable="d"
-        Title="Fahrzeugfenster" Height="350" Width="500">
+        Title="Fahrzeugfenster" Height="350" Width="500" ResizeMode="CanMinimize">
     <Grid Margin="4,4,4,4" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -19,15 +19,31 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <Label Content="Typ des Vehicles:" Grid.Row="0" Grid.Column="0"/>
-        <Label Content="Marke:" Grid.Row="1"  Grid.Column="0"/>
-        <Label Content="Modell:" Grid.Row="2" Grid.Column="0"/>
-        <Label Content="In Reperatur:" Grid.Row="3" Grid.Column="0"/>
 
-        <TextBox Text="{Binding Type}" Grid.Row="0" Grid.Column="1"/>
-        <TextBox Grid.Row="1" Grid.Column="1">
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+            <Button Content="&#x1F844;" Command="{Binding PreviousCommand}" IsEnabled="{Binding HasPrevious}"/>
+            <TextBlock Margin="4,0,4,0">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Datensatz {0}/{1}">
+                        <Binding Path="DatasetNumber"/>
+                        <Binding Path="Count"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <Button Content="&#x1F846;" Command="{Binding NextCommand}" IsEnabled="{Binding HasNext}"/>
+        </StackPanel>
+
+
+        <Label Content="Typ des Vehicles:" Grid.Row="1" Grid.Column="0"/>
+        <Label Content="Marke:" Grid.Row="2"  Grid.Column="0"/>
+        <Label Content="Modell:" Grid.Row="3" Grid.Column="0"/>
+        <Label Content="In Reperatur:" Grid.Row="4" Grid.Column="0"/>
+
+        <TextBox Text="{Binding Type}" Grid.Row="1" Grid.Column="1"/>
+        <TextBox Grid.Row="2" Grid.Column="1">
             <TextBox.Text>
                 <Binding Path="Brand">
                     <Binding.ValidationRules>
@@ -36,7 +52,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox Grid.Row="2" Grid.Column="1">
+        <TextBox Grid.Row="3" Grid.Column="1">
             <TextBox.Text>
                 <Binding Path="Model">
                     <Binding.ValidationRules>
@@ -45,9 +61,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <CheckBox IsChecked="{Binding InRepair}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"/>
+        <CheckBox IsChecked="{Binding InRepair}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"/>
 
-        <Button Content="Zufällig" Command="{Binding RandomCommand}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <Button Content="Speichern" Command="{Binding SaveCommand}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Button Content="Zufällig" Command="{Binding RandomCommand}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="4,4,4,0"/>
+        <Button Content="Speichern" Command="{Binding SaveCommand}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="4,4,4,0"/>
     </Grid>
 </Window>

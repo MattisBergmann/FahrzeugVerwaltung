@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 
 namespace FahrzeugVerwaltung.UI
 {
-    public class VehicleInformationViewModel : ViewModelBase
+    public class VehicleInformationViewModel : ObservableRecipient
     {
 
         private bool saved;

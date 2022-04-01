@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using GalaSoft.MvvmLight.Command;
 
 namespace FahrzeugVerwaltung.UI
 {
